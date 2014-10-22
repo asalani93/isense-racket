@@ -2,13 +2,13 @@
 iSENSE Racket is a wrapper around the iSENSE website API written in Racket.  It also includes a library of various utility functions useful when working with intent-related things.
 
 Using iSENSE Racket
-===================
+-------------------
 1. Download or clone this repository.
 2. Copy the files `isense-3.rkt` and `quick-net.rkt` into the same directory as the file that is going to call them.
 3. Call `(require "isense-3.rkt")` at the top of every file calling iSENSE Racket-related functionality.
 
 `isense-3.rkt` Documentation
-============================
+----------------------------
 
 Definition | Explanation
 --- | ---
@@ -20,4 +20,4 @@ Function | Explanation
 `(isense-credentials-ckey ckey name)` | Creates a credentials object based on a contributor key.  `ckey` is the contributor key, and `name` is the contributor name.
 
 `quick-net.rkt` Documentation
-=============================
+-----------------------------
