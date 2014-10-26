@@ -462,11 +462,3 @@
   (cond
     ((eq? (cred 'type) 'contribution-key) (upload-ckey))
     ((eq? (cred 'type) 'login-password) (upload-pass))))
-
-    
-
-; test defines
-(define proj (isense-get-project-by-id 474))
-(define dataset (isense-get-dataset-by-id 3320))
-(define cred1 (isense-credentials-ckey "sharktown" "contrib1"))
-(define cred2 (isense-credentials-pass "w@w.w" "w"))
