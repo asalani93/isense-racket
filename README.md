@@ -26,7 +26,39 @@ Using iSENSE Racket
 * `(isense-add-dataset project cred data name)`: Adds a dataset to a project.
 * `(isense-append-dataset dset cred data)`: Appends data to a dataset.  Currently does not work.
 
-There are project, dataset, field, and credential objects.  For an explanation of how to use each one, look up the accompanying `make-x` function in the source, where `x` is the name of the object.  None of these functions should be publicly accessible, but the method of accessing their data is important and contained within each.
+#### Project Objects
+These are lambdas returned by functions like `(isense-get-project-by-id)` or `(isense-create-project)`.  They use message passing to access the object's properties.  Project objects support the following the messages:
+
+Message | Result
+--- | ---
+`'id` | The project ID.
+`'name` | A string representing the human-readable name of the project.
+`'fields` | Return a list of field IDs.  Call `(isense-get-field-by-id)` on a given ID to get the corresponding field object.
+`'datasets` | Return a list of dataset IDs.  Call `(isense-get-dataset-by-id)` on a given ID to get the corresponding dataset object.
+
+#### Dataset Objects
+These are lambdas representing datasets returned by functions like `(isense-get-dataset-by-id)`, or by project objects.  They use message passing to access the object's properties.  Dataset objects support the following the messages:
+
+Message | Result
+--- | ---
+`'id` | The dataset ID.
+`'name` | A string representing the human-readable name of the project.
+`'fields` | Return a list of field IDs.  Call `(isense-get-field-by-id)` on a given ID to get the corresponding field object.
+`'data` | Return the data in the datset.  This takes the form of a list of lists.  The parent list contains list of data sorted by their containing field.  Each child list is preceeded by an ID that represents the field the data belongs to.  The remaining data in each list is the data for that field in the order it appears on iSENSE.
+
+#### Field Objects
+These are lambdas representing fields.  They use message passing to access the object's properties.  Field objects support the following messages:
+
+Message | Result
+--- | ---
+`'id` | The field ID.
+`'name` | A string representing the human-readable name of the field.
+`'type` | A number representing the type of the field (1 = Timestamp, 2 = Number, 3 = Text, 4 = Latitude, 5 = Longitude). 
+`'unit` | A string representing the units the field is in, such as "inches" or "liters".
+`'restrictions` | A list of restrictions to the content of the field.  For example, if a field's restrictions are "cat" and "dog", that field can only contain the strings "cat" and "dog".
+
+#### Uploading Data
+The format data is to be uploaded in is identical to the way it is retrieved from the dataset object.  That is, it's a list of lists, where each sub-list is a field ID followed by a list of values to put in that field.
 
 `quick-net.rkt` Documentation
 -----------------------------
